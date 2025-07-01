@@ -1,0 +1,16 @@
+body.home-page{
+  background: radial-gradient(circle farthest-corner at center, #3C4B57 0%, #1C262B 100%);
+  color: #f0f0f0;
+}
+
+.home-page .loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  perspective: 800px;
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+}

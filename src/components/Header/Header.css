@@ -1,0 +1,43 @@
+.site-header.dark {
+  background-color: transparent;
+  color: #f0f0f0;
+}
+.site-header.dark a {
+  color: #ccc;
+}
+.site-header.dark a:hover {
+  color: #fff;
+}
+
+header {
+  background-color: #f0f0f0;
+  padding: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  padding: 2rem;
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-evenly;
+  gap: 1rem;
+}
+
+nav ul li a {
+  text-decoration: none;
+  color: #333;
+  text-transform: uppercase;
+}
+
+nav ul li a:hover {
+  color: #4b4bd6;
+}

@@ -1,0 +1,15 @@
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.resultsBox {
+  background-color: #f9f9f9;
+  border-left: 4px solid #3f51b5;
+  padding: 1rem;
+  /* margin-top: 1rem; */
+  /* border-radius: 6px; */
+  font-family: monospace;
+}
