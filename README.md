@@ -40,18 +40,56 @@ This project serves as a sandbox for:
 
 ```
 react25/
-├── public/              # Static assets
+├── public/                    # Static assets
 ├── src/
-│   ├── components/      # Reusable React components
-│   ├── data/            # Sample datasets (like people.js)
+│   ├── assets/                # Images, fonts, etc. (currently empty)
+│   ├── components/            # Shared components
+│   │   ├── Breadcrumbs/
+│   │   │   ├── Breadcrumbs.css
+│   │   │   └── Breadcrumbs.jsx
+│   │   └── Header/
+│   │       ├── Header.css
+│   │       └── Header.jsx
+│   ├── data/                  # Static datasets
+│   │   └── people.js
 │   ├── pages/
-│   │   ├── Home/        # Home page components
-│   │   ├── JSPlayground/# JavaScript testing environment
-│   │   └── ReactPlayground/ # React testing environment
-│   ├── App.jsx          # Main application component
-│   └── main.jsx         # Application entry point
-├── index.html           # HTML entry point
-└── package.json         # Project dependencies and scripts
+│   │   ├── Home/
+│   │   │   ├── Home.css
+│   │   │   └── Home.jsx
+│   │   ├── JSPlayground/
+│   │   │   ├── API/
+│   │   │   │   ├── API.css
+│   │   │   │   └── API.jsx
+│   │   │   ├── Play/
+│   │   │   │   ├── tabs/
+│   │   │   │   │   ├── OverviewTab.css
+│   │   │   │   │   ├── OverviewTab.jsx
+│   │   │   │   │   ├── SearchTab.css
+│   │   │   │   │   ├── SearchTab.jsx
+│   │   │   │   │   └── TabTwo.jsx
+│   │   │   │   ├── Play.css
+│   │   │   │   └── Play.jsx
+│   │   │   ├── JSPlayground.css
+│   │   │   ├── JSPlayground.jsx
+│   │   │   ├── Layout.jsx
+│   │   │   ├── PlaygroundHome.css
+│   │   │   ├── PlaygroundHome.jsx
+│   │   │   ├── Refreshers.css
+│   │   │   └── Refreshers.jsx
+│   │   └── ReactPlayground/
+│   │       ├── ReactPlayground.css
+│   │       └── ReactPlayground.jsx
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+├── package-lock.json
+├── vite.config.js
+├── .gitignore
+├── eslint.config.js
+└── README.md
 ```
 
 ## 🚦 Getting Started
