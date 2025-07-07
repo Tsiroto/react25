@@ -1,0 +1,102 @@
+h3 {
+  margin-bottom: 3rem;
+}
+
+.controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+}
+
+.control-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+.control-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 160px;
+}
+
+.range-inputs {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.range-inputs input {
+  width: 80px;
+}
+
+.controls input,
+.controls select {
+  padding: 4px 6px;
+  font-size: 0.85rem;
+  min-width: 120px;
+}
+.controls select {
+  min-width: 160px;
+}
+
+.controls label {
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.controls button {
+  height: 2.3rem;
+  padding: 0 1rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  color: #2D2F5A;
+  background-color: #ffd9d9!important;
+  border: 1px solid #2D2F5A!important;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #2D2F5A!important;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  .control-group {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+
+.people-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+  font-size: 0.8rem;
+}
+
+.people-table th,
+.people-table td {
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  text-align: left;
+  vertical-align: top;
+}
+
+.people-table th {
+  background-color: #f8f8f8;
+  color: #2D2F5A;
+  font-weight: bold;
+}
+
+th {
+  white-space: nowrap;
+}
+
+.table-wrapper {
+  overflow-x: auto;
+  max-width: 100%;
+}

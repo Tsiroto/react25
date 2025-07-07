@@ -1,16 +1,17 @@
 .site-header.dark {
   background-color: transparent;
-  color: #f0f0f0;
+  color: #fff;
 }
 .site-header.dark a {
-  color: #ccc;
+  color: #fff;
 }
 .site-header.dark a:hover {
+  text-decoration: underline;
   color: #fff;
 }
 
 header {
-  background-color: #f0f0f0;
+  background-color: #2D2F5A;
   padding: 1rem;
   position: sticky;
   top: 0;
@@ -34,10 +35,11 @@ nav ul {
 
 nav ul li a {
   text-decoration: none;
-  color: #333;
+  color: #fff;
   text-transform: uppercase;
 }
 
 nav ul li a:hover {
-  color: #4b4bd6;
+  text-decoration: underline;
+  color: #fff;
 }

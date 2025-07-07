@@ -1,18 +1,8 @@
-import {Outlet, Link} from 'react-router-dom';
+import {Outlet} from 'react-router-dom';
 
-export default function JSPlaygroundLayout() {
+export default function PlaygroundLayout() {
   return (
     <div>
-      <nav style={{ padding: 0 }}>
-        <ul>
-          <li><Link to="/js-playground/refreshers">Refreshers</Link></li>
-          <li><Link to="/js-playground/play">Play</Link></li>
-          <li><Link to="/js-playground/play/api">API</Link></li>
-        </ul>
-      </nav>
-
-      <hr />
-
       <Outlet />
     </div>
   )

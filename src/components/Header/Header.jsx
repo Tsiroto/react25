@@ -11,8 +11,7 @@ function Header() {
       <nav>
         <ul>
           <li><Link to="/">Home</Link></li>
-          <li><Link to="/js-playground">JS Playground</Link></li>
-          <li><Link to="/react-playground">React Zone</Link></li>
+          <li><Link to="/playground">Playground</Link></li>
         </ul>
       </nav>
     </header>
