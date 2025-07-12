@@ -100,3 +100,7 @@ th {
   overflow-x: auto;
   max-width: 100%;
 }
+
+.people-found {
+  margin-top: 1rem;
+}

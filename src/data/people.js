@@ -172,9 +172,9 @@ export const people = [
     email: "petros.v@example.com",
     dob: "1980-12-20",
     age: 43,
-    employmentStatus: "Fired",
-    yearsAtCurrentJob: 0,
-    annualIncome: 0,
+    employmentStatus: "Employed",
+    yearsAtCurrentJob: 3,
+    annualIncome: 39000,
     remote: false,
     skills: ["Accounting", "Excel"],
     department: "Finance"
@@ -203,8 +203,8 @@ export const people = [
     dob: "1990-06-30",
     age: 34,
     employmentStatus: "Fired",
-    yearsAtCurrentJob: 9,
-    annualIncome: 36000,
+    yearsAtCurrentJob: 15,
+    annualIncome: 82000,
     remote: false,
     skills: ["DevOps", "AWS", "Docker"],
     department: "Infrastructure"

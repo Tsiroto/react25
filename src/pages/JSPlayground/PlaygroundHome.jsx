@@ -9,25 +9,22 @@ export default function PlaygroundHome() {
         <Link to="/playground/refreshers" className="section-item">
           <h3>Refreshers</h3>
           <p>
-            This section provides interactive examples of common JavaScript array methods.
-            You can select a topic to see examples of how methods like map, filter, and reduce work.
-            The examples will be logged to the console for you to explore.
+            This section offers hands-on examples of key JavaScript array methods.
+            Choose a method like map, filter, or reduce to see how it works in practice. Each example runs live and logs its output to the console, helping you understand the logic behind each transformation.
           </p>
         </Link>
 
         <Link to="/playground/play" className="section-item">
           <h3>Play</h3>
           <p>
-            The Play section allows you to interact with sample data and explore different ways to 
-            visualize and manipulate it. You can view company statistics, search and filter employee 
-            data, and more.
+            You can search, filter, and sort the dataset, test logic for custom conditions, and get insights through live data interaction—ideal for improving your JavaScript and data handling skills.
           </p>
         </Link>
 
-        <Link to="/playground/API" className="section-item">
-          <h3>API</h3>
+        <Link to="/playground/userdeck" className="section-item">
+          <h3>UserDeck</h3>
           <p>
-            [This section is coming soon]
+            Manage and edit user data stored in localStorage. Add, update, or delete entries — changes are saved in your browser.
           </p>
         </Link>
       </div>
