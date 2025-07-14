@@ -13,21 +13,29 @@ import {
     TableContainer,
     TableHead,
     TableRow,
+    TextField,
     Toolbar,
     Tooltip,
     Paper,
     CircularProgress,
     Stack,
 } from '@mui/material';
+import SearchIcon from '@mui/icons-material/Search';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import ClearAllIcon from '@mui/icons-material/ClearAll';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
-import SearchIcon from '@mui/icons-material/Search';
+import { InputAdornment } from '@mui/material';
 
 export default function UserDeck() {
     const [people, setPeople] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [searchInput, setSearchInput] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
+
+    const filteredPeople = people.filter((p) =>
+        p.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
     useEffect(() => {
         fetch('http://localhost:3000/people')
@@ -44,6 +52,14 @@ export default function UserDeck() {
                 setLoading(false);
             });
     }, []);
+
+    useEffect(() => {
+        const timeout = setTimeout(() => {
+        setSearchTerm(searchInput);
+        }, 200);
+        return () => clearTimeout(timeout);
+    }, [searchInput]);
+
 
     const clearLocalStorage = () => {
         localStorage.clear();
@@ -74,37 +90,45 @@ export default function UserDeck() {
                             <CircularProgress />
                         </Box>
                     ) : (
+                        <>
+                            <Box sx={{ my: 2 }}>
+                                <TextField
+                                    size="small"
+                                    fullWidth
+                                    variant="outlined"
+                                    placeholder="Search by name"
+                                    value={searchInput}
+                                    onChange={(e) => setSearchInput(e.target.value)}
+                                    InputProps={{
+                                        startAdornment: (
+                                            <InputAdornment position="start">
+                                                <SearchIcon />
+                                            </InputAdornment>
+                                        ),
+                                    }}
+                                />
+                            </Box>
 
-                        <TableContainer component={Paper}>
-                            <Table>
-                                <TableHead>
-                                    <TableRow>
-                                        <TableCell>ID</TableCell>
-                                        <TableCell>Name</TableCell>
-                                        {/*<TableCell align="center">Actions</TableCell>*/}
-                                    </TableRow>
-                                </TableHead>
-                                <TableBody>
-                                    {people.map((p) => (
-                                        <TableRow key={p.id}>
-                                            <TableCell>{p.id}</TableCell>
-                                            <TableCell>{p.name}</TableCell>
-                                            {/*<TableCell align="center">*/}
-                                            {/*    <Stack direction="row" spacing={1} justifyContent="center">*/}
-                                            {/*        <Button size="small" color="primary" variant="outlined" startIcon={<EditIcon />}>*/}
-                                            {/*            Edit*/}
-                                            {/*        </Button>*/}
-                                            {/*        <Button size="small" color="error" variant="outlined" startIcon={<DeleteIcon />}>*/}
-                                            {/*            Delete*/}
-                                            {/*        </Button>*/}
-                                            {/*    </Stack>*/}
-                                            {/*</TableCell>*/}
+                            <TableContainer component={Paper}>
+                                <Table>
+                                    <TableHead>
+                                        <TableRow>
+                                            <TableCell>ID</TableCell>
+                                            <TableCell>Name</TableCell>
                                         </TableRow>
-                                    ))}
-                                </TableBody>
-                            </Table>
-                        </TableContainer>
-                    )}
+                                    </TableHead>
+                                    <TableBody>
+                                        {filteredPeople.map((p) => (
+                                            <TableRow key={p.id}>
+                                                <TableCell>{p.id}</TableCell>
+                                                <TableCell>{p.name}</TableCell>
+                                            </TableRow>
+                                        ))}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                        </>
+                        )}
                 </Box>
             </Box>
 

@@ -161,13 +161,6 @@ This project uses the [`concurrently`](https://www.npmjs.com/package/concurrentl
 - **Why it's used:**
   - Simplifies the workflow by letting you start both frontend and backend (or other processes) together with a single command, making development faster and more convenient.
 
-## 🤝 Contributing
-
-Contributions are welcome! Feel free to:
-- Add new JavaScript or React examples
-- Improve existing code
-- Enhance documentation
-- Fix bugs
 
 ## 📄 License
 
