@@ -1,24 +1,62 @@
+import {useEffect} from "react";
+import { useOutletContext } from 'react-router-dom';
 import { useData } from '../../data/DataContext';
 import {Box, Card, CardContent, Typography, Alert, Button} from '@mui/material';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
-import {useEffect} from "react";
+import BarChartIcon from '@mui/icons-material/BarChart';
 
-const Report = ({ addLog }) => {
+const Reports = () => {
+    const { addLog } = useOutletContext();
     const { data, loading, error, fetchData } = useData();
 
+    const logMsg = (msg) => {
+        const message =
+            typeof msg === 'string'
+                ? msg
+                : typeof msg === 'object'
+                    ? JSON.stringify(msg)
+                    : String(msg);
+
+        addLog(`[${new Date().toLocaleTimeString()}] > ${message}`);
+    };
+
     const totalPeople = data?.length ?? 0;
-    const avgAge =
-        totalPeople > 0
-            ? (data.reduce((sum, p) => sum + p.age, 0) / totalPeople).toFixed(1)
-            : '-';
+
+    const avgAge = totalPeople
+        ? (data.reduce((sum, p) => sum + p.age, 0) / totalPeople).toFixed(1)
+        : '-';
 
     const remoteCount = data?.filter(p => p.remote).length ?? 0;
-    const remotePercent = totalPeople > 0 ? ((remoteCount / totalPeople) * 100).toFixed(1) : '-';
+    const remotePercent = totalPeople
+        ? ((remoteCount / totalPeople) * 100).toFixed(1)
+        : '-';
 
-    const avgIncome =
-        totalPeople > 0
-            ? (data.reduce((sum, p) => sum + p.annualIncome, 0) / totalPeople).toFixed(0)
-            : '-';
+    const avgIncome = totalPeople
+        ? (data.reduce((sum, p) => sum + p.annualIncome, 0) / totalPeople).toFixed(0)
+        : '-';
+
+    const departments = new Set(data.map(p => p.department));
+    const departmentCounts = departments.size;
+
+    const departmentFreq = {};
+    data.forEach(p => {
+        departmentFreq[p.department] = (departmentFreq[p.department] || 0) + 1;
+    });
+    const mostCommonDepartment = Object.entries(departmentFreq)
+        .sort((a, b) => b[1] - a[1])[0]?.[0] || '-';
+
+    const topEarnerData = data.length
+        ? data.reduce((top, p) => (p.annualIncome > top.annualIncome ? p : top), data[0])
+        : null;
+    const topEarner = topEarnerData
+        ? `€${topEarnerData.annualIncome} annual`
+        : '-';
+
+    const yearsAtCurrentJob = data?.reduce((longest, p) =>
+        (p.yearsAtCurrentJob > longest.yearsAtCurrentJob ? p : longest), data[0]) || {};
+    const longestTenure = yearsAtCurrentJob?.yearsAtCurrentJob
+        ? `${yearsAtCurrentJob.yearsAtCurrentJob} years`
+        : '-';
 
     const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042', '#8884d8'];
 
@@ -32,32 +70,54 @@ const Report = ({ addLog }) => {
         .map(([name, value]) => ({ name, value }))
         .sort((a, b) => b.value - a.value);
 
-    if (entries.length > 5) {
-        const top5 = entries.slice(0, 5);
-        const otherTotal = entries.slice(5).reduce((sum, item) => sum + item.value, 0);
-        entries = [...top5, { name: 'Other', value: otherTotal }];
+    if (entries.length > 4) {
+        const top4 = entries.slice(0, 4);
+        const otherTotal = entries.slice(4).reduce((sum, item) => sum + item.value, 0);
+        entries = [...top4, { name: 'Other', value: otherTotal }];
     }
 
     const countryData = entries;
 
+    console.log("avgAge is", avgAge);
     useEffect(() => {
-        if (!addLog) return;
+        const fetchAndLog = async () => {
+            if (typeof fetchData === 'function') {
+                logMsg("Fetching data from API...");
+                await fetchData();
+            } else {
+                logMsg("❌ fetchData is not a function");
+            }
+        };
 
-        if (loading) addLog('Fetching people from API...');
-        if (error) addLog(`❌ Error: ${error.message || 'unknown'}`);
-        if (!loading && !error && data?.length) {
-            addLog(`✅ Loaded ${data.length} people.`);
-        }
-    }, [loading, error, data]);
+        fetchAndLog();
+    }, []);
+
+    useEffect(() => {
+        if (!data || data.length === 0 || !addLog) return;
+
+        logMsg(`✅ Loaded ${totalPeople} people.`);
+        logMsg(`Average age: ${avgAge}`);
+        logMsg(`Remote workers: ${remoteCount} (${remotePercent}%)`);
+        logMsg(`Average income: €${avgIncome}`);
+        logMsg(`Departments: ${departmentCounts}`);
+        logMsg(`Most common department: ${mostCommonDepartment}`);
+        logMsg(`Top earner: ${topEarner}`);
+        logMsg(`Longest tenure: ${longestTenure}`);
+    }, [data]);
 
     const handleRetry = () => {
-        if (addLog) addLog('🔁 Retrying fetch...');
+        if (addLog) logMsg('🔁 Retrying fetch...');
         fetchData();
     };
 
     return (
         <Box>
-            <Typography variant="h4" gutterBottom>📊 Report</Typography>
+            <Box display="flex" alignItems="center" gap={1} pt="20px" pb="20px">
+                <BarChartIcon sx={{ color: '#1976d2', fontSize: '2rem' }} />
+                <Typography variant="h4" component="h1" fontWeight="bold">
+                    Reports
+                </Typography>
+            </Box>
             {error && (
                 <Alert severity="error" sx={{ mb: 2 }}>
                     <Box
@@ -90,12 +150,16 @@ const Report = ({ addLog }) => {
                 </Alert>
             )}
 
-            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 4 }}>
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2, mb: 4, justifyContent: { xs: 'center', md: 'flex-start' } }}>
                 {[
                     { title: 'Total People', value: totalPeople },
                     { title: 'Average Age', value: avgAge },
                     { title: 'Remote Workers', value: `${remotePercent}%` },
                     { title: 'Average Income', value: `€${avgIncome}` },
+                    { title: 'Departments', value: `${departmentCounts}` },
+                    { title: 'Most Common Dpt', value: mostCommonDepartment },
+                    { title: 'Top Earner', value: `${topEarner}` },
+                    { title: 'Longest Tenure', value: `${longestTenure}` },
                 ].map((card, i) => (
                     <Card
                         key={i}
@@ -103,14 +167,13 @@ const Report = ({ addLog }) => {
                             flex: '1 1 180px',
                             minWidth: 150,
                             boxShadow: 'none',
-                            border: 'none',
-                            // borderRadius: 2,
-                            // borderBottom: 'none'
+                            border: '1px solid lightgrey',
+                            borderRadius: 2,
                         }}
                     >
                         <CardContent>
-                            <Typography variant="h6">{card.title}</Typography>
-                            <Typography variant="h4">{card.value}</Typography>
+                            <Typography variant="h6" textAlign='center'>{card.title}</Typography>
+                            <Typography variant="h5" color='#649dd5' textAlign='center'>{card.value}</Typography>
                         </CardContent>
                     </Card>
                 ))}
@@ -185,4 +248,4 @@ const Report = ({ addLog }) => {
     );
 };
 
-export default Report;
+export default Reports;

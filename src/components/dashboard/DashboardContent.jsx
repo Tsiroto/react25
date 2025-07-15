@@ -1,7 +1,6 @@
-import { Box, Grid } from '@mui/material';
-import Report from './Report.jsx';
-import PeopleTable from './PeopleTable.jsx';
 import { useState } from "react";
+import { Outlet } from 'react-router-dom';
+import { Box, Grid } from '@mui/material';
 import Terminal from './Terminal';
 
 export default function DashboardContent() {
@@ -13,14 +12,14 @@ export default function DashboardContent() {
     };
 
     return (
-        <Box>
-            <Grid container spacing={3}>
-                <Grid item xs={12} width={"100%"}>
-                    <Report addLog={addLog} />
-                    <PeopleTable />
-                    <Terminal logs={logs} />
-                </Grid>
-            </Grid>
+        <Box sx={{ display: "flex", flexDirection: "column", height: "100%", overflow: "hidden" }}>
+            <Box sx={{ flexGrow: 1, overflowY: "auto", pr: 1 }}>
+                <Outlet context={{ addLog }} />
+            </Box>
+
+            <Box sx={{ flexShrink: 0, borderTop: '1px solid #ccc' }}>
+                <Terminal logs={logs} />
+            </Box>
         </Box>
     );
 }

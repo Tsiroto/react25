@@ -12,6 +12,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import { format } from 'date-fns';
 import {
+    theColor,
     primaryColor,
     backgroundColor,
     layoutZIndex,
@@ -27,9 +28,8 @@ export default function Header() {
             elevation={1}
             sx={{
                 backgroundColor: backgroundColor,
-                color: primaryColor,
+                color: theColor,
                 zIndex: layoutZIndex.appBar,
-                borderBottom: '1px solid #fcfcfc',
             }}
         >
             <Toolbar
@@ -43,7 +43,7 @@ export default function Header() {
                         backgroundColor: '#fff',
                         display: 'flex',
                         flexDirection: 'row',
-                        alignItems: 'flex-start',
+                        alignItems: 'center',
                         gap: 3,
                     }}
                 >
@@ -64,7 +64,8 @@ export default function Header() {
                             }
                         }}
                     >
-                        <DashboardIcon fontSize="large" sx={{ color: primaryColor }} />
+
+                        <DashboardIcon fontSize="large" sx={{ color: theColor }} />
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                             <Typography
                                 variant="h2"
@@ -127,6 +128,7 @@ export default function Header() {
                             borderRadius: 2,
                             border: '1px solid #e0e0e0',
                             ml: 1,
+                            mr: 3,
                             position: 'relative',
                         }}
                     >

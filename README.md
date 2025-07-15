@@ -1,87 +1,76 @@
-# JavaScript & React Testing Playground
+# React Project #1 – Dashboard
 
-A comprehensive playground for testing and experimenting with JavaScript and React concepts. This project provides an interactive environment to practice JavaScript operations, React components, and web development techniques.
+A modern, interactive dashboard built with React and Material UI. This project showcases reusable components, filtering/sorting functionality, and clean UI structure using context-based state management.
 
-![JavaScript & React Testing Playground](https://via.placeholder.com/800x400?text=JS+and+React+Playground)
+![Dashboard Preview](./src/assets/preview.jpg)
+![Dashboard Preview 2](./src/assets/preview-2.jpg)
 
 ## 🚀 Purpose
 
-This project serves as a sandbox for:
-- Experimenting with React components and hooks
-- Practicing data manipulation techniques
-- Learning modern web development concepts
+This project serves as a practical playground to experiment with React concepts such as:
+
+- Context API and state sharing
+- Custom reusable components
+- Material UI integration
+- Real-time filtering, sorting, and searching
+- CRUD operations with modals and dialogs
+
+It's the first in a series of structured React projects aimed at improving real-world development skills.
 
 ## ✨ Features
 
-- **JavaScript Playground**
-  - JavaScript refreshers and fundamentals (mockup)
-  - Data manipulation examples (filtering, sorting, reducing)
-  - API interaction demonstrations (using a local fake API)
-  - Virtual company report (mock employee data, filter/sort/search employees)
-  - UserDeck: CRUD system for users (localStorage, separate from API data)
-
+- 📊 Dashboard with mock data using `json-server` and soon an API
+- 🧾 Report page with data insights and visualizations
+- 🔍 People page with live search, department and country filters, sorting, and pagination
+- 👥 A popup form for creating, editing, and deleting users (work in progress)
+- 🧩 Modular structure with MUI components
+- 🎨 Partially custom MUI theme and layout system
+- 🖥️ Simulated terminal interface displaying mock requests, calculations, and user interactions
 
 ## 🛠️ Technologies Used
 
-- **Frontend**: React, React Router
-- **Build Tool**: Vite
-- **Styling**: CSS, Material UI (MUI) (currently using both; planning to upgrade fully to MUI soon)
-- **API/Backend**: json-server (for local fake API during development)
+- **Frontend:** React, React Router, Material UI (MUI)
+- **State Management:** React Context
+- **Build Tool:** Vite
+- **Styling:** CSS & MUI theme overrides
+- **API/Backend:** `json-server` for mock data (will be replaced with a real API soon)
 
 ## 📋 Project Structure
 
 ```
 react25/
-├── public/                    # Static assets (favicon, images, etc.)
+├── public/
 ├── src/
-│   ├── assets/                # Images, SVGs, and other asset files
-│   ├── components/            # Shared React components
-│   │   ├── Breadcrumbs/       # Breadcrumb navigation component
-│   │   │   ├── Breadcrumbs.css
-│   │   │   └── Breadcrumbs.jsx
-│   │   └── Header/            # Header (site navigation) component
-│   │       ├── Header.css
-│   │       └── Header.jsx
-│   ├── data/                  # Static datasets for playgrounds
-│   │   └── people.js
-│   ├── pages/                 # Main app pages and playgrounds
-│   │   ├── Home/              # Home page
-│   │   │   ├── Home.css
-│   │   │   └── Home.jsx
-│   │   ├── JSPlayground/      # JavaScript playground section
-│   │   │   ├── API/           # API interaction examples
-│   │   │   │   ├── API.css
-│   │   │   │   └── API.jsx
-│   │   │   ├── Play/          # Data manipulation playground
-│   │   │   │   ├── tabs/      # Tabs for different play experiments
-│   │   │   │   │   ├── OverviewTab.css
-│   │   │   │   │   ├── OverviewTab.jsx
-│   │   │   │   │   ├── SearchTab.css
-│   │   │   │   │   ├── SearchTab.jsx
-│   │   │   │   │   └── TabTwo.jsx
-│   │   │   │   ├── Play.css
-│   │   │   │   └── Play.jsx
-│   │   │   ├── JSPlayground.css
-│   │   │   ├── JSPlayground.jsx
-│   │   │   ├── Layout.jsx     # Layout for JSPlayground
-│   │   │   ├── PlaygroundHome.css
-│   │   │   ├── PlaygroundHome.jsx
-│   │   │   ├── Refreshers.css
-│   │   │   └── Refreshers.jsx # JS fundamentals refresher
-│   │   └── ReactPlayground/   # React playground section
-│   │       ├── ReactPlayground.css
-│   │       └── ReactPlayground.jsx
-│   ├── App.css                # Global styles
-│   ├── App.jsx                # Main app component
-│   ├── index.css              # Base styles
-│   └── main.jsx               # App entry point
-├── index.html                 # HTML template
-├── package.json               # Project metadata and scripts
-├── package-lock.json          # Dependency lock file
-├── vite.config.js             # Vite configuration
-├── .gitignore                 # Git ignore rules
-├── eslint.config.js           # ESLint configuration
-└── README.md                  # Project documentation
+│ ├── assets/
+│ ├── components/
+│ │ ├── dashboard/
+│ │ │ ├── DashboardContent.jsx
+│ │ │ ├── People.jsx
+│ │ │ ├── Reports.jsx
+│ │ │ ├── Terminal.jsx
+│ │ │ ├── ReadMe.jsx
+│ │ │ └── UserFormDialog.jsx
+│ │ ├── layout/
+│ │ │ ├── Layout.jsx
+│ │ │ ├── Sidebar.jsx
+│ │ │ ├── Header.jsx
+│ │ │ ├── Loader.jsx
+│ │ │ └── Loader.css
+│ ├── config/
+│ │ ├── theme.js
+│ │ └── layoutSettings.js
+│ ├── data/
+│ │ ├── people.js # Local mock dataset
+│ │ └── DataContext.jsx # Shared data provider
+│ ├── App.jsx
+│ ├── App.css
+│ ├── index.css
+│ ├── main.jsx
+├── db.json # Fake API database
+├── package.json
+├── vite.config.js
+├── .gitignore
+└── README.md
 ```
 
 ## 🚦 Getting Started
@@ -102,8 +91,6 @@ react25/
 2. Install dependencies:
    ```bash
    npm install
-   # or
-   yarn
    ```
 
 3. Start the development server and mock API together:
@@ -123,14 +110,6 @@ react25/
 
 4. Open your browser and navigate to `http://localhost:5173`
 
-## 🧪 How to Use
-
-1. **Home Page**: Navigate to the home page to see an overview of the project.
-2. **JS Playground**: Explore the JavaScript playground to test various JS operations:
-   - Refreshers: Review JavaScript fundamentals
-   - Play: Experiment with data manipulation on sample datasets
-   - API: Test API interactions
-3. **React Playground**: Experiment with React components and concepts.
 
 ## 📝 Examples
 
@@ -142,13 +121,6 @@ The playground includes examples of:
 - Using array methods (map, reduce, filter)
 - Working with Sets for unique values
 
-### React Component Creation
-
-Practice creating and using React components with:
-- useState and useEffect hooks
-- Conditional rendering
-- Component composition
-- Routing between different sections
 
 ## 🧩 Development Utilities
 
@@ -164,4 +136,6 @@ This project uses the [`concurrently`](https://www.npmjs.com/package/concurrentl
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+To kill. (services)
+
+This project is for personal or educational use. No license is currently applied.

@@ -13,7 +13,7 @@ export const DataProvider = ({ children }) => {
             const result = await res.json();
             setData(result);
         } catch (err) {
-            setError(err); // optional
+            setError(err);
             console.error('Failed to fetch data:', err);
         } finally {
             setLoading(false);
@@ -25,7 +25,7 @@ export const DataProvider = ({ children }) => {
     }, []);
 
     return (
-        <DataContext.Provider value={{ data, loading, error }}>
+        <DataContext.Provider value={{ data, loading, error, fetchData }}>
             {children}
         </DataContext.Provider>
     );

@@ -1,12 +1,12 @@
-import { Box, Toolbar } from "@mui/material";
-import Header from "./Header";
-import SideBar from "./SideBar";
+import { Outlet } from 'react-router-dom';
+import Header from './Header';
+import SideBar from './SideBar';
+import { Box, Toolbar } from '@mui/material';
 
-export default function Layout({ children }) {
+const Layout = () => {
     return (
         <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
             <Header />
-
             <Box sx={{ display: "flex", flexGrow: 1, minHeight: 0 }}>
                 <Box sx={{ width: 240, flexShrink: 0 }}>
                     <SideBar />
@@ -16,13 +16,17 @@ export default function Layout({ children }) {
                     sx={{
                         flexGrow: 1,
                         p: 3,
-                        overflow: "auto",
+                        overflow: "hidden", // prevent vertical scroll here
+                        display: "flex",
+                        flexDirection: "column",
                     }}
                 >
                     <Toolbar />
-                    { children }
+                    <Outlet />
                 </Box>
             </Box>
         </Box>
     );
-}
+};
+
+export default Layout;

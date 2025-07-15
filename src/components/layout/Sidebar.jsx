@@ -1,3 +1,12 @@
+import { NavLink } from 'react-router-dom';
+import IconButton from '@mui/material/IconButton';
+import BarChartIcon from '@mui/icons-material/BarChart';
+import SettingsIcon from '@mui/icons-material/Settings';
+import InfoIcon from '@mui/icons-material/Info';
+import FeedbackIcon from '@mui/icons-material/Feedback';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import PeopleIcon from '@mui/icons-material/People';
+import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
 import {
     Avatar,
     Box, Divider,
@@ -9,19 +18,11 @@ import {
     ListItemText,
     Toolbar, Typography
 } from '@mui/material';
-import HomeIcon from '@mui/icons-material/Home';
-import BarChartIcon from '@mui/icons-material/BarChart';
-import AssignmentIcon from '@mui/icons-material/Assignment';
-import SettingsIcon from '@mui/icons-material/Settings';
-import InfoIcon from '@mui/icons-material/Info';
-import FeedbackIcon from '@mui/icons-material/Feedback';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
-import IconButton from '@mui/material/IconButton';
 
 const menuItems = [
-    { text: 'Report', icon: <HomeIcon /> },
-    { text: 'People', icon: <AssignmentIcon /> },
-    { text: 'readMe.md', icon: <BarChartIcon /> },
+    { text: 'Reports', icon: <BarChartIcon />, to: '/', color: '#1976d2' },
+    { text: 'People', icon: <PeopleIcon />, to: '/people', color: '#1976d2' },
+    { text: 'ReadMe.md', icon: <LibraryBooksIcon />, to: '/readme', color: '#1976d2' },  // this was missing
 ];
 
 const bottomItems = [
@@ -49,13 +50,35 @@ export default function Sidebar() {
                 <Toolbar />
                 <Box sx={{ overflow: 'auto', pt: 3, pr: 3 }}>
                     <List>
-                        {menuItems.map((item, index) => (
-                            <ListItem key={item.text} disablePadding>
-                                <ListItemButton>
-                                    <ListItemIcon>{item.icon}</ListItemIcon>
-                                    <ListItemText primary={item.text}/>
-                                </ListItemButton>
-                            </ListItem>
+                        {menuItems.map((item) => (
+                            <NavLink
+                                to={item.to}
+                                key={item.text}
+                                style={{ textDecoration: 'none' }}
+                                className={({ isActive }) => (isActive ? 'active-link' : '')}
+                            >
+                                <ListItem disablePadding>
+                                    <ListItemButton
+                                        className="sidebar-button"
+                                        sx={{
+                                            color: 'inherit',
+                                            '&:hover': {
+                                                backgroundColor: '#f0f0f0',
+                                            },
+                                        }}
+                                    >
+                                        <ListItemIcon
+                                            sx={{
+                                                color: item.color,
+                                                minWidth: '40px',
+                                            }}
+                                        >
+                                            {item.icon}
+                                        </ListItemIcon>
+                                        <ListItemText primary={item.text} />
+                                    </ListItemButton>
+                                </ListItem>
+                            </NavLink>
                         ))}
                     </List>
                 </Box>
@@ -80,21 +103,21 @@ export default function Sidebar() {
                         alignItems: 'center',
                         justifyContent: 'space-between',
                         gap: 2,
-                        p: 2,
+                        p: 1,
                         '&:hover': {
                             cursor: 'pointer',
                             backgroundColor: 'rgba(0, 0, 0, 0.05)',
                         }
                     }}
                 >
-                    <Avatar sx={{ width: 32, height: 32 }}>G</Avatar>
-                    <Box>
-                        <Typography variant="body2">Giorgos Dev</Typography>
+                    <Avatar sx={{ width: 32, height: 32, backgroundColor: '#1976d2' }}>G</Avatar>
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <Typography variant="subtitle1">Giorgos Dev</Typography>
                         <Typography variant="caption" color="text.secondary">
                             giorgos@dev.com
                         </Typography>
                     </Box>
-                    <IconButton size="normal" sx={{ ml: 'auto' }}>
+                    <IconButton size="normal" sx={{ ml: 'auto', '&:hover': { color: '#1976d2' } }}>
                         <MoreVertIcon fontSize="normal" />
                     </IconButton>
                 </Box>
