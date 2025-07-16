@@ -8,8 +8,8 @@ import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import EditIcon from '@mui/icons-material/Edit';
 import { visuallyHidden } from '@mui/utils';
 import { useState, useMemo } from 'react';
-import { useData } from '../../data/DataContext';
-import UserFormDialog from './UserFormDialog';
+import { useData } from '../../../data/DataContext.jsx';
+import UserFormDialog from './UserFormDialog.jsx';
 
 function descendingComparator(a, b, orderBy) {
     if (b[orderBy] < a[orderBy]) return -1;
@@ -72,7 +72,7 @@ export default function People() {
     const [orderBy, setOrderBy] = useState('name');
     const [selected, setSelected] = useState([]);
     const [page, setPage] = useState(0);
-    const [rowsPerPage, setRowsPerPage] = useState(10);
+    const [rowsPerPage, setRowsPerPage] = useState(5);
 
     const [searchTerm, setSearchTerm] = useState('');
     const [departmentFilter, setDepartmentFilter] = useState('');
@@ -118,7 +118,6 @@ export default function People() {
     };
 
     const handleFormSave = (formData) => {
-        console.log('Saving...', formData);
         handleFormClose();
     };
 
@@ -151,7 +150,7 @@ export default function People() {
     const uniqueCountries = [...new Set((people || []).map(p => p.country))];
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ px: 3, width: '100%', display: 'flex', flexDirection: 'column', flexGrow: 1, minHeight: 0 }}>
             <Paper sx={{ p: 2, mb: 2 }}>
                 <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
                     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap', alignItems: 'center' }}>
@@ -216,47 +215,50 @@ export default function People() {
                 </Box>
             </Paper>
 
-            <Paper sx={{ width: '100%', mb: 2 }}>
+            <Paper sx={{ width: '100%', mb: 2, flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
                 <Toolbar>
                     <Typography variant="h6" component="div" sx={{ flex: '1 1 100%' }}>
                         People
                     </Typography>
                 </Toolbar>
 
-                <TableContainer>
-                    <Table>
-                        <EnhancedTableHead
-                            order={order}
-                            orderBy={orderBy}
-                            onRequestSort={handleRequestSort}
-                        />
-                        <TableBody>
-                            {pagedPeople.map((person) => (
-                                <TableRow
-                                    hover
-                                    key={person.id}
-                                    sx={{ cursor: 'pointer' }}
-                                    onClick={() => handleRowClick(person)}
-                                >
-                                    <TableCell padding="checkbox">
-                                        <Checkbox
-                                            checked={selected.includes(person.id)}
-                                            onClick={(e) => handleCheckboxClick(e, person.id)}
-                                        />
-                                    </TableCell>
-                                    <TableCell>{person.name}</TableCell>
-                                    <TableCell>{person.department}</TableCell>
-                                    <TableCell>{person.age}</TableCell>
-                                    <TableCell>{person.country}</TableCell>
-                                    <TableCell>€{person.annualIncome.toLocaleString()}</TableCell>
-                                    <TableCell>{person.remote ? 'Yes' : 'No'}</TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <Box sx={{ flexGrow: 1, maxHeight: '40vh' ,overflow: 'auto' }}>
+                    <TableContainer>
+                        <Table stickyHeader size="normal" aria-label="enhanced table">
+                            <EnhancedTableHead
+                                order={order}
+                                orderBy={orderBy}
+                                onRequestSort={handleRequestSort}
+                            />
+                            <TableBody>
+                                {pagedPeople.map((person) => (
+                                    <TableRow
+                                        hover
+                                        key={person.id}
+                                        sx={{ cursor: 'pointer' }}
+                                        onClick={() => handleRowClick(person)}
+                                    >
+                                        <TableCell padding="checkbox">
+                                            <Checkbox
+                                                checked={selected.includes(person.id)}
+                                                onClick={(e) => handleCheckboxClick(e, person.id)}
+                                            />
+                                        </TableCell>
+                                        <TableCell>{person.name}</TableCell>
+                                        <TableCell>{person.department}</TableCell>
+                                        <TableCell>{person.age}</TableCell>
+                                        <TableCell>{person.country}</TableCell>
+                                        <TableCell>€{person.annualIncome.toLocaleString()}</TableCell>
+                                        <TableCell>{person.remote ? 'Yes' : 'No'}</TableCell>
+                                    </TableRow>
+                                ))}
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Box>
+
                 <TablePagination
-                    rowsPerPageOptions={[10]}
+                    rowsPerPageOptions={[5, 7, 10, 15, 25]}
                     component="div"
                     count={visiblePeople.length}
                     rowsPerPage={rowsPerPage}

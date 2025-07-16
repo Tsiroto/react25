@@ -1,19 +1,17 @@
 import {
     Dialog, DialogTitle, DialogContent, DialogActions,
     Button, TextField, MenuItem, Select, InputLabel,
-    FormControl, Box, Chip, Typography
+    FormControl, Box, Chip, Typography, Snackbar, Alert
 } from '@mui/material';
 import { useEffect, useState } from 'react';
 
 const employmentOptions = ['Employed', 'Freelance', 'Intern'];
 const defaultCountries = ['Greece', 'Cyprus', 'Germany', 'France', 'Netherlands', 'USA'];
-const defaultCities = ['Athens', 'Thessaloniki', 'Berlin', 'Paris', 'New York'];
 
 const defaultFormState = {
     name: '',
     department: '',
     country: '',
-    location: '',
     age: 19,
     salary: 0,
     remote: false,
@@ -28,7 +26,6 @@ const UserFormDialog = ({ open, onClose, onSave, initialData = {} }) => {
         name: '',
         department: '',
         country: '',
-        location: '',
         age: 19,
         salary: 0,
         remote: false,
@@ -39,6 +36,7 @@ const UserFormDialog = ({ open, onClose, onSave, initialData = {} }) => {
     });
 
     const [errors, setErrors] = useState({});
+    const [showSaved, setShowSaved] = useState(false);
 
     useEffect(() => {
         if (open) {
@@ -68,10 +66,6 @@ const UserFormDialog = ({ open, onClose, onSave, initialData = {} }) => {
 
         if (!defaultCountries.includes(form.country)) {
             newErrors.country = 'Please select a valid country';
-        }
-
-        if (!defaultCities.includes(form.location)) {
-            newErrors.location = 'Please select a valid city';
         }
 
         if (form.yearsAtCurrentJob > form.age - 18) {
@@ -110,9 +104,14 @@ const UserFormDialog = ({ open, onClose, onSave, initialData = {} }) => {
         const { salary, ...rest } = form;
         const payload = { ...rest, annualIncome: salary };
         onSave(payload);
+        setShowSaved(true);
+        setTimeout(() => {
+            setShowSaved(false);
+        }, 3000);
     };
 
     return (
+        <>
         <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
             <DialogTitle>{initialData?.id ? 'Edit User' : 'Add User'}</DialogTitle>
             <DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 2, mt: 1 }}>
@@ -143,21 +142,6 @@ const UserFormDialog = ({ open, onClose, onSave, initialData = {} }) => {
                         ))}
                     </Select>
                     {errors.country && <Typography color="error" variant="caption">{errors.country}</Typography>}
-                </FormControl>
-
-                <FormControl fullWidth>
-                    <InputLabel>City</InputLabel>
-                    <Select
-                        value={form.location}
-                        onChange={(e) => handleChange('location', e.target.value)}
-                        label="City"
-                        error={!!errors.location}
-                    >
-                        {defaultCities.map((c) => (
-                            <MenuItem key={c} value={c}>{c}</MenuItem>
-                        ))}
-                    </Select>
-                    {errors.location && <Typography color="error" variant="caption">{errors.location}</Typography>}
                 </FormControl>
 
                 <TextField
@@ -228,7 +212,15 @@ const UserFormDialog = ({ open, onClose, onSave, initialData = {} }) => {
                 <Button onClick={onClose}>Cancel</Button>
                 <Button onClick={handleSubmit} variant="contained">Save</Button>
             </DialogActions>
+
         </Dialog>
+        <Snackbar open={showSaved} autoHideDuration={3000} onClose={() => setShowSaved(false)}>
+            <Alert onClose={() => setShowSaved(false)} severity="success" sx={{ width: '100%' }}>
+                Saved! (Not for real)
+            </Alert>
+        </Snackbar>
+        </>
+
     );
 };
 

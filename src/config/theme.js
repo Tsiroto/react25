@@ -6,41 +6,41 @@ const theme = createTheme({
         fontFamily: `'Inter', 'Roboto', 'Helvetica', 'Arial', sans-serif`,
 
         h1: {
-            fontSize: '2.5rem',       // 40px
-            lineHeight: 1.3,          // 52px
+            fontSize: '2.25rem',
+            lineHeight: 1.3,
             fontWeight: 700,
         },
         h2: {
-            fontSize: '2rem',         // 32px
+            fontSize: '2rem',
             lineHeight: 1.35,
             fontWeight: 700,
         },
         h3: {
-            fontSize: '1.75rem',      // 28px
+            fontSize: '1.75rem',
             lineHeight: 1.4,
             fontWeight: 600,
         },
         h4: {
-            fontSize: '1.5rem',       // 24px
+            fontSize: '1.5rem',
             lineHeight: 1.45,
             fontWeight: 600,
         },
         h5: {
-            fontSize: '1.25rem',      // 20px
+            fontSize: '1.25rem',
             lineHeight: 1.5,
             fontWeight: 500,
         },
         h6: {
-            fontSize: '1.125rem',     // 18px
+            fontSize: '1.125rem',
             lineHeight: 1.6,
             fontWeight: 500,
         },
         body1: {
-            fontSize: '1rem',         // 16px
+            fontSize: '1rem',
             lineHeight: 1.6,
         },
         body2: {
-            fontSize: '0.875rem',     // 14px
+            fontSize: '0.875rem',
             lineHeight: 1.5,
         },
         subtitle1: {

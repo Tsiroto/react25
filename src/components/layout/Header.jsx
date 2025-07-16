@@ -19,9 +19,10 @@ import {
     headerHeight
 } from '../../config/layoutSettings.js';
 
-export default function Header() {
+export default function Header({ addLog }) {
 
     const currentDate = format(new Date(), 'EEEE, d MMMM, yyyy');
+
     return (
         <AppBar
             position="fixed"
@@ -65,7 +66,7 @@ export default function Header() {
                         }}
                     >
 
-                        <DashboardIcon fontSize="large" sx={{ color: theColor }} />
+                        <DashboardIcon fontSize="large" sx={{ display: { xs: 'none', md: 'flex' },color: theColor }} />
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                             <Typography
                                 variant="h2"
@@ -89,7 +90,7 @@ export default function Header() {
                     </Box>
                     <Typography
                         component="a"
-                        href="https://chiroto.eu/"
+                        href="https://giorgosn8.sg-host.com/"
                         color={primaryColor}
                         underline="none"
                         rel="noopener"
@@ -105,7 +106,7 @@ export default function Header() {
 
                 </Box>
 
-                <Box display={"flex"}>
+                <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -130,6 +131,7 @@ export default function Header() {
                             ml: 1,
                             mr: 3,
                             position: 'relative',
+                            '&:hover': { color: '#1976d2' }
                         }}
                     >
                         <NotificationsIcon />
@@ -137,7 +139,7 @@ export default function Header() {
                             sx={{
                                 width: 8,
                                 height: 8,
-                                backgroundColor: 'red',
+                                backgroundColor: 'orangered',
                                 borderRadius: '50%',
                                 position: 'absolute',
                                 top: 6,

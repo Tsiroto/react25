@@ -1,6 +1,6 @@
 import {useEffect} from "react";
 import { useOutletContext } from 'react-router-dom';
-import { useData } from '../../data/DataContext';
+import { useData } from '../../../data/DataContext.jsx';
 import {Box, Card, CardContent, Typography, Alert, Button} from '@mui/material';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 import BarChartIcon from '@mui/icons-material/BarChart';
@@ -78,7 +78,6 @@ const Reports = () => {
 
     const countryData = entries;
 
-    console.log("avgAge is", avgAge);
     useEffect(() => {
         const fetchAndLog = async () => {
             if (typeof fetchData === 'function') {
@@ -111,7 +110,7 @@ const Reports = () => {
     };
 
     return (
-        <Box>
+        <Box maxHeight='49vh'>
             <Box display="flex" alignItems="center" gap={1} pt="20px" pb="20px">
                 <BarChartIcon sx={{ color: '#1976d2', fontSize: '2rem' }} />
                 <Typography variant="h4" component="h1" fontWeight="bold">
@@ -182,7 +181,7 @@ const Reports = () => {
             <Box
                 sx={{
                     display: 'flex',
-                    flexDirection: 'row',
+                    flexDirection: { xs: 'column', md: 'row' },
                     gap: 4,
                     alignItems: 'center',
                     justifyContent: 'space-between',

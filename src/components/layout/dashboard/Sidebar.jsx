@@ -1,37 +1,53 @@
 import { NavLink } from 'react-router-dom';
-import IconButton from '@mui/material/IconButton';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import InfoIcon from '@mui/icons-material/Info';
 import FeedbackIcon from '@mui/icons-material/Feedback';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import PeopleIcon from '@mui/icons-material/People';
 import LibraryBooksIcon from '@mui/icons-material/LibraryBooks';
+import ProfileMenu from './ProfileMenu.jsx';
 import {
     Avatar,
-    Box, Divider,
+    Box,
+    Divider,
     Drawer,
     List,
     ListItem,
     ListItemButton,
     ListItemIcon,
     ListItemText,
-    Toolbar, Typography
+    Toolbar,
+    Typography,
 } from '@mui/material';
 
 const menuItems = [
     { text: 'Reports', icon: <BarChartIcon />, to: '/', color: '#1976d2' },
     { text: 'People', icon: <PeopleIcon />, to: '/people', color: '#1976d2' },
-    { text: 'ReadMe.md', icon: <LibraryBooksIcon />, to: '/readme', color: '#1976d2' },  // this was missing
+    { text: 'README', icon: <LibraryBooksIcon />, to: '/readme', color: '#1976d2' },  // this was missing
 ];
 
 const bottomItems = [
-    { text: 'Settings', icon: <SettingsIcon /> },
-    { text: 'About', icon: <InfoIcon /> },
-    { text: 'Feedback', icon: <FeedbackIcon /> }
+    {
+        text: 'Settings',
+        color: '#1976d2',
+        icon: <SettingsIcon />,
+        log: '⚙️ No functional Settings!',
+    },
+    {
+        text: 'About',
+        color: '#1976d2',
+        icon: <InfoIcon />,
+        log: 'ℹ️ It\'s the first in a series of structured React projects aimed at improving real-world development skills.',
+    },
+    {
+        text: 'Feedback',
+        color: '#1976d2',
+        icon: <FeedbackIcon />,
+        log: '💬 Feedback is much appreciated!',
+    },
 ];
 
-export default function Sidebar() {
+export default function Sidebar({ addLog }) {
     return (
         <Drawer
             variant="permanent"
@@ -88,15 +104,18 @@ export default function Sidebar() {
                 <List>
                     {bottomItems.map((item) => (
                         <ListItem key={item.text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>{item.icon}</ListItemIcon>
+                            <ListItemButton
+                                onClick={() => addLog?.(item.log)}
+                            >
+                                <ListItemIcon sx={{ color: item.color || 'inherit' }}>
+                                    {item.icon}
+                                </ListItemIcon>
                                 <ListItemText primary={item.text} />
                             </ListItemButton>
                         </ListItem>
                     ))}
                 </List>
 
-                {/* User Info */}
                 <Box
                     sx={{
                         display: 'flex',
@@ -117,9 +136,9 @@ export default function Sidebar() {
                             giorgos@dev.com
                         </Typography>
                     </Box>
-                    <IconButton size="normal" sx={{ ml: 'auto', '&:hover': { color: '#1976d2' } }}>
-                        <MoreVertIcon fontSize="normal" />
-                    </IconButton>
+                    <Box display="flex" justifyContent="flex-end">
+                        <ProfileMenu addLog={addLog} />
+                    </Box>
                 </Box>
             </Box>
         </Drawer>

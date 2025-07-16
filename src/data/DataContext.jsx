@@ -9,7 +9,7 @@ export const DataProvider = ({ children }) => {
 
     const fetchData = async () => {
         try {
-            const res = await fetch('http://localhost:3000/people')
+            const res = await fetch('https://giorgosn8.sg-host.com/api/users.php')
             const result = await res.json();
             setData(result);
         } catch (err) {

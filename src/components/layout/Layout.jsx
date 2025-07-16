@@ -1,28 +1,33 @@
+import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 import Header from './Header';
-import SideBar from './SideBar';
 import { Box, Toolbar } from '@mui/material';
 
 const Layout = () => {
+
+    const [logs, setLogs] = useState([]);
+
+    const addLog = (entry) => {
+        const time = new Date().toLocaleTimeString();
+        setLogs(prev => [...prev, { time, ...entry }]);
+    };
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-            <Header />
+            <Header addLog={addLog} />
             <Box sx={{ display: "flex", flexGrow: 1, minHeight: 0 }}>
-                <Box sx={{ width: 240, flexShrink: 0 }}>
-                    <SideBar />
-                </Box>
                 <Box
                     component="main"
                     sx={{
                         flexGrow: 1,
                         p: 3,
-                        overflow: "hidden", // prevent vertical scroll here
+                        overflow: "hidden",
                         display: "flex",
                         flexDirection: "column",
                     }}
                 >
                     <Toolbar />
-                    <Outlet />
+                    <Outlet context={{ addLog }}/>
                 </Box>
             </Box>
         </Box>

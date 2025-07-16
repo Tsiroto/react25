@@ -2,8 +2,8 @@
 
 A modern, interactive dashboard built with React and Material UI. This project showcases reusable components, filtering/sorting functionality, and clean UI structure using context-based state management.
 
-![Dashboard Preview](./src/assets/preview.jpg)
-![Dashboard Preview 2](./src/assets/preview-2.jpg)
+![Dashboard Preview](./src/assets/preview.jpg "Dashboard Screenshot")
+![Dashboard Preview 2](./src/assets/preview-2.jpg "User CRUD and Terminal Preview")
 
 ## 🚀 Purpose
 
@@ -19,7 +19,7 @@ It's the first in a series of structured React projects aimed at improving real-
 
 ## ✨ Features
 
-- 📊 Dashboard with mock data using `json-server` and soon an API
+- 📊 Dashboard with data
 - 🧾 Report page with data insights and visualizations
 - 🔍 People page with live search, department and country filters, sorting, and pagination
 - 👥 A popup form for creating, editing, and deleting users (work in progress)
@@ -33,7 +33,7 @@ It's the first in a series of structured React projects aimed at improving real-
 - **State Management:** React Context
 - **Build Tool:** Vite
 - **Styling:** CSS & MUI theme overrides
-- **API/Backend:** `json-server` for mock data (will be replaced with a real API soon)
+- **API/Backend:** `json-server` for mock data initially but upgraded to a functional API
 
 ## 📋 Project Structure
 
@@ -43,35 +43,55 @@ react25/
 ├── src/
 │ ├── assets/
 │ ├── components/
-│ │ ├── dashboard/
-│ │ │ ├── DashboardContent.jsx
-│ │ │ ├── People.jsx
-│ │ │ ├── Reports.jsx
-│ │ │ ├── Terminal.jsx
-│ │ │ ├── ReadMe.jsx
-│ │ │ └── UserFormDialog.jsx
 │ │ ├── layout/
+│ │ │ │ ├── dashboard/
+│ │ │ │ │ ├── DashboardContent.jsx
+│ │ │ │ │ ├── People.jsx
+│ │ │ │ │ ├── ProfileMenu.jsx
+│ │ │ │ │ ├── ReadMe.jsx
+│ │ │ │ │ ├── Reports.jsx
+│ │ │ │ │ ├── Sidebar.jsx
+│ │ │ │ │ ├── Terminal.jsx
+│ │ │ │ │ └── UserFormDialog.jsx
 │ │ │ ├── Layout.jsx
-│ │ │ ├── Sidebar.jsx
 │ │ │ ├── Header.jsx
-│ │ │ ├── Loader.jsx
-│ │ │ └── Loader.css
+│ │ ├── Loader.jsx # not used
+│ │ ├── Loader.css
 │ ├── config/
 │ │ ├── theme.js
 │ │ └── layoutSettings.js
 │ ├── data/
-│ │ ├── people.js # Local mock dataset
+│ │ ├── db.json # Fake API database
 │ │ └── DataContext.jsx # Shared data provider
 │ ├── App.jsx
 │ ├── App.css
 │ ├── index.css
 │ ├── main.jsx
-├── db.json # Fake API database
 ├── package.json
 ├── vite.config.js
 ├── .gitignore
 └── README.md
 ```
+
+---
+
+## 🛤️ The Road So Far
+
+This project began as a simple single-page playground to practice JavaScript methods. As my curiosity grew, I introduced React Router to explore routing and started splitting the app into multiple pages—still without styling at this stage.
+
+Wanting a better structure, I experimented with tabs and basic custom styling. But soon I needed dynamic data. I simulated a fake API using json-server, running the app and server in two separate terminals. To simplify the process, I used the concurrently package and created the npm run go command to launch both services together.
+
+As the app became more data-driven, I brought in Material UI (MUI) to give structure and styling to components. However, things started getting messy—so I stepped back and refactored everything into a proper dashboard layout, using almost completely Material UI (MUI). That phase took a few days of trial and error, but it helped me rework previous pages and significantly improve both the logic and the UI.
+
+I added new features, applied improvements, and spent time debugging — especially when I started passing props between components and managing data across different parts of the app. I also handled basic responsiveness, although it wasn’t the main focus—so the mobile view is still rough.
+
+After that, I wanted to explore state management, as it became necessary for handling API data across multiple components. I decided to start with the useContext hook to build a solid foundation before moving to more advanced solutions like Zustand, TanStack Query, or Redux, depending on the needs of future projects.
+
+While finishing the project, I started thinking about how to share my work. I didn’t want it to live just on GitHub, where someone would have to install and run it locally to inspect it — I wanted it to be accessible live online, instantly. That led me to set up a real API on a hosted domain instead of using json-server, so I could publish the full app online and demonstrate its functionality without requiring any setup from the viewer.
+
+Now, I'm planning a portfolio master app that will act as the home for all my future projects—no matter the stack.
+
+This is the first finished step in that journey.
 
 ## 🚦 Getting Started
 
@@ -84,7 +104,7 @@ react25/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/react25.git
+   git clone https://github.com/Tsiroto/react25.git
    cd react25
    ```
 
@@ -93,49 +113,23 @@ react25/
    npm install
    ```
 
-3. Start the development server and mock API together:
+3. To run only the frontend:
    ```bash
-   npm run go
+   npm run dev
    ```
-   This command uses [concurrently](https://www.npmjs.com/package/concurrently) to run both the Vite dev server and the mock API server (using `json-server` with `db.json`) at the same time.
-
-   - To run only the frontend:
-     ```bash
-     npm run dev
-     ```
-   - To run only the mock API server:
-     ```bash
-     npm run serve
-     ```
-
+   
 4. Open your browser and navigate to `http://localhost:5173`
 
 
-## 📝 Examples
+## 📬 Reach Me
 
-### JavaScript Data Manipulation
+### If you'd like to connect, collaborate, or just say hi, feel free to reach out:
 
-The playground includes examples of:
-- Filtering and searching data
-- Calculating averages and percentages
-- Using array methods (map, reduce, filter)
-- Working with Sets for unique values
-
-
-## 🧩 Development Utilities
-
-### concurrently
-
-This project uses the [`concurrently`](https://www.npmjs.com/package/concurrently) package to streamline development:
-
-- **What it does:**
-  - Allows running multiple commands (such as the Vite dev server and a mock API server) simultaneously in one terminal window.
-- **Why it's used:**
-  - Simplifies the workflow by letting you start both frontend and backend (or other processes) together with a single command, making development faster and more convenient.
-
+- 📧 Email: doufasg@gmail.com
+- 💼 LinkedIn: https://www.linkedin.com/in/georgios-ntoufas/
+- 🐙 GitHub: [@Tsiroto](https://github.com/Tsiroto)
 
 ## 📄 License
 
-To kill. (services)
 
 This project is for personal or educational use. No license is currently applied.
