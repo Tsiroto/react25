@@ -1,7 +1,7 @@
 import {
     Box, Table, TableBody, TableCell, TableContainer, TableHead,
     TablePagination, TableRow, TableSortLabel, Toolbar, Typography,
-    Paper, Checkbox,
+    Paper, Checkbox, useTheme, useMediaQuery,
     TextField, Select, MenuItem, InputLabel, FormControl, Button
 } from '@mui/material';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
@@ -26,10 +26,10 @@ function getComparator(order, orderBy) {
 const headCells = [
     { id: 'name', numeric: false, label: 'Name' },
     { id: 'department', numeric: false, label: 'Department' },
-    { id: 'age', numeric: true, label: 'Age' },
     { id: 'country', numeric: false, label: 'Country' },
-    { id: 'annualIncome', numeric: true, label: 'Income (€)' },
     { id: 'remote', numeric: false, label: 'Remote' },
+    { id: 'age', numeric: true, label: 'Age' },
+    { id: 'annualIncome', numeric: true, label: 'Income (€)' },
 ];
 
 function EnhancedTableHead({ order, orderBy, onRequestSort }) {
@@ -45,6 +45,13 @@ function EnhancedTableHead({ order, orderBy, onRequestSort }) {
                     <TableCell
                         key={headCell.id}
                         sortDirection={orderBy === headCell.id ? order : false}
+                        sx={
+                            headCell.id === 'annualIncome'
+                                ? { display: { xs: 'none', md: 'table-cell' } }
+                                : ['age', 'remote'].includes(headCell.id)
+                                    ? { display: { xs: 'none', lg: 'table-cell' } }
+                                    : {}
+                        }
                     >
                         <TableSortLabel
                             active={orderBy === headCell.id}
@@ -149,6 +156,9 @@ export default function People() {
     const uniqueDepartments = [...new Set((people || []).map(p => p.department))];
     const uniqueCountries = [...new Set((people || []).map(p => p.country))];
 
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('md'));
+
     return (
         <Box sx={{ px: 3, width: '100%', display: 'flex', flexDirection: 'column', flexGrow: 1, minHeight: 0 }}>
             <Paper sx={{ p: 2, mb: 2 }}>
@@ -161,32 +171,35 @@ export default function People() {
                             value={searchTerm}
                             onChange={(e) => setSearchTerm(e.target.value)}
                         />
-                        <FormControl sx={{ minWidth: 160 }} size="small">
-                            <InputLabel>Department</InputLabel>
-                            <Select
-                                value={departmentFilter}
-                                label="Department"
-                                onChange={(e) => setDepartmentFilter(e.target.value)}
-                            >
-                                <MenuItem value="">All</MenuItem>
-                                {uniqueDepartments.map((d, i) => (
-                                    <MenuItem key={i} value={d}>{d}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-                        <FormControl sx={{ minWidth: 160 }} size="small">
-                            <InputLabel>Country</InputLabel>
-                            <Select
-                                value={countryFilter}
-                                label="Country"
-                                onChange={(e) => setCountryFilter(e.target.value)}
-                            >
-                                <MenuItem value="">All</MenuItem>
-                                {uniqueCountries.map((c, i) => (
-                                    <MenuItem key={i} value={c}>{c}</MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                        <Box sx={{ display: 'flex', gap: 2 }}>
+                            <FormControl sx={{ minWidth: 160 }} size="small">
+                                <InputLabel>Department</InputLabel>
+                                <Select
+                                    value={departmentFilter}
+                                    label="Department"
+                                    onChange={(e) => setDepartmentFilter(e.target.value)}
+                                >
+                                    <MenuItem value="">All</MenuItem>
+                                    {uniqueDepartments.map((d, i) => (
+                                        <MenuItem key={i} value={d}>{d}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+
+                            <FormControl sx={{ minWidth: 160 }} size="small">
+                                <InputLabel>Country</InputLabel>
+                                <Select
+                                    value={countryFilter}
+                                    label="Country"
+                                    onChange={(e) => setCountryFilter(e.target.value)}
+                                >
+                                    <MenuItem value="">All</MenuItem>
+                                    {uniqueCountries.map((c, i) => (
+                                        <MenuItem key={i} value={c}>{c}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
+                        </Box>
                     </Box>
 
                     <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
@@ -216,15 +229,16 @@ export default function People() {
             </Paper>
 
             <Paper sx={{ width: '100%', mb: 2, flexGrow: 1, minHeight: 0, display: 'flex', flexDirection: 'column' }}>
-                <Toolbar>
-                    <Typography variant="h6" component="div" sx={{ flex: '1 1 100%' }}>
-                        People
-                    </Typography>
-                </Toolbar>
 
-                <Box sx={{ flexGrow: 1, maxHeight: '40vh' ,overflow: 'auto' }}>
-                    <TableContainer>
-                        <Table stickyHeader size="normal" aria-label="enhanced table">
+                <Box sx={{ flexGrow: 1, maxHeight: '40vh', overflow: 'auto' }}>
+                    <TableContainer
+                        sx={{
+                            overflowX: 'auto',
+                            WebkitOverflowScrolling: 'touch',
+                            maxWidth: '100%',
+                        }}
+                    >
+                        <Table stickyHeader size={isSmallScreen ? 'small' : 'medium'} aria-label="enhanced table">
                             <EnhancedTableHead
                                 order={order}
                                 orderBy={orderBy}
@@ -244,12 +258,20 @@ export default function People() {
                                                 onClick={(e) => handleCheckboxClick(e, person.id)}
                                             />
                                         </TableCell>
+
                                         <TableCell>{person.name}</TableCell>
                                         <TableCell>{person.department}</TableCell>
-                                        <TableCell>{person.age}</TableCell>
                                         <TableCell>{person.country}</TableCell>
-                                        <TableCell>€{person.annualIncome.toLocaleString()}</TableCell>
-                                        <TableCell>{person.remote ? 'Yes' : 'No'}</TableCell>
+
+                                        <TableCell sx={{ display: { xs: 'none', md: 'table-cell' } }}>
+                                            {person.remote ? 'Yes' : 'No'}
+                                        </TableCell>
+                                        <TableCell sx={{ display: { xs: 'none', lg: 'table-cell' } }}>
+                                            {person.age}
+                                        </TableCell>
+                                        <TableCell sx={{ display: { xs: 'none', lg: 'table-cell' } }}>
+                                            €{person.annualIncome.toLocaleString()}
+                                        </TableCell>
                                     </TableRow>
                                 ))}
                             </TableBody>

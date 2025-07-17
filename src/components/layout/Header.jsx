@@ -4,12 +4,18 @@ import {
     Toolbar,
     Typography,
     IconButton,
+    Menu,
+    MenuItem,
+    Divider
 } from '@mui/material';
+import MenuIcon from '@mui/icons-material/Menu';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { format } from 'date-fns';
 import {
     theColor,
@@ -20,8 +26,27 @@ import {
 } from '../../config/layoutSettings.js';
 
 export default function Header({ addLog }) {
-
     const currentDate = format(new Date(), 'EEEE, d MMMM, yyyy');
+    const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const handleMenuClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleNavigation = (path) => {
+        handleClose();
+        if (path.startsWith('http')) {
+            window.open(path, '_blank');
+        } else {
+            navigate(path);
+        }
+    };
 
     return (
         <AppBar
@@ -65,8 +90,7 @@ export default function Header({ addLog }) {
                             }
                         }}
                     >
-
-                        <DashboardIcon fontSize="large" sx={{ display: { xs: 'none', md: 'flex' },color: theColor }} />
+                        <DashboardIcon fontSize="large" sx={{ display: { xs: 'none', lg: 'flex' }, color: theColor }} />
                         <Box sx={{ display: "flex", flexDirection: "column" }}>
                             <Typography
                                 variant="h2"
@@ -91,22 +115,28 @@ export default function Header({ addLog }) {
                     <Typography
                         component="a"
                         href="https://giorgosn8.sg-host.com/"
-                        color={primaryColor}
-                        underline="none"
+                        target="_blank"
                         rel="noopener"
-                        sx={{ alignSelf: "center", mt: 2, mb: 2,
+                        color={theColor}
+                        fontSize={"1.1rem"}
+                        fontWeight={450}
+                        sx={{
+                            display: { xs: 'none', lg: 'flex' },
+                            alignSelf: "center",
+                            mt: 2,
+                            mb: 2,
                             transition: 'color 0.2s',
                             '&:hover': {
                                 color: '#2d2f5a',
+                                backgroundColor: 'transparent',
                             }
-                    }}
+                        }}
                     >
-                        Back to my Website
+                        Visit Portfolio
                     </Typography>
-
                 </Box>
 
-                <Box sx={{ display: { xs: 'none', md: 'flex' }, }}>
+                <Box sx={{ display: { xs: 'none', lg: 'flex' } }}>
                     <Box
                         sx={{
                             display: 'flex',
@@ -148,6 +178,45 @@ export default function Header({ addLog }) {
                         />
                     </IconButton>
                 </Box>
+
+                <IconButton
+                    sx={{
+                        display: { xs: 'flex', lg: 'none' },
+                        ml: 2,
+                        backgroundColor: '#fff',
+                        border: '1px solid #e0e0e0',
+                        '&:hover': {
+                            color: '#1976d2',
+                        }
+                    }}
+                    onClick={handleMenuClick}
+                >
+                    <MenuIcon />
+                </IconButton>
+
+                <Menu
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleClose}
+                    PaperProps={{
+                        elevation: 4,
+                        sx: { mt: 1, minWidth: 160 }
+                    }}
+                    anchorOrigin={{
+                        vertical: 'bottom',
+                        horizontal: 'right',
+                    }}
+                    transformOrigin={{
+                        vertical: 'top',
+                        horizontal: 'right',
+                    }}
+                >
+                    <MenuItem onClick={() => handleNavigation('/')}>Reports</MenuItem>
+                    <MenuItem onClick={() => handleNavigation('/people')}>People</MenuItem>
+                    <MenuItem onClick={() => handleNavigation('/readme')}>ReadMe</MenuItem>
+                    <Divider />
+                    <MenuItem onClick={() => handleNavigation('https://giorgosn8.sg-host.com/')}>Visit Portfolio</MenuItem>
+                </Menu>
             </Toolbar>
         </AppBar>
     );

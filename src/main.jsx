@@ -9,7 +9,7 @@ import theme from './config/theme.js';
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
         <ThemeProvider theme={theme}>
-            <BrowserRouter>
+            <BrowserRouter basename="/react-to-people">
                 <CssBaseline />
                 <App />
             </BrowserRouter>

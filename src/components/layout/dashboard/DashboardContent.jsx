@@ -14,8 +14,7 @@ export default function DashboardContent() {
 
     return (
         <Box sx={{ display: "flex", height: "100%", overflow: "hidden" }}>
-            {/* Sidebar (left column) */}
-            <Box sx={{ width: 240, flexShrink: 0 }}>
+            <Box sx={{ display: { xs: 'none', lg: 'flex' }, width: 240, flexShrink: 0 }}>
                 <Sidebar addLog={addLog} />
             </Box>
 

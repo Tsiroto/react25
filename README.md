@@ -2,8 +2,8 @@
 
 A modern, interactive dashboard built with React and Material UI. This project showcases reusable components, filtering/sorting functionality, and clean UI structure using context-based state management.
 
-![Dashboard Preview](./src/assets/preview.jpg "Dashboard Screenshot")
-![Dashboard Preview 2](./src/assets/preview-2.jpg "User CRUD and Terminal Preview")
+![Dashboard Preview](public/preview.jpg "Dashboard Screenshot")
+![Dashboard Preview 2](public/preview-2.jpg "User CRUD and Terminal Preview")
 
 ## 🚀 Purpose
 
